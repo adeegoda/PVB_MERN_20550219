@@ -16,6 +16,5 @@ pvbApp.get('/', (req, res) => {
 pvbApp.use(errorHandler.resourceNotFound);
 pvbApp.use(errorHandler.pvbErrorHandler);
 
-db.connectPVBDatabase();
 pvbApp.listen(port, console.log(`Server started @ port ${port}`));
-
+db.connectPVBDatabase();
