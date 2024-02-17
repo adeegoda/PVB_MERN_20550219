@@ -1,3 +1,5 @@
+module.exports = { ...require('./eballot-handler') };
+
 module.exports.resourceNotFound = (req, res, next) => {
     const error = new Error('Resource Not Found');
     error.status = 404;
