@@ -4,7 +4,6 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./handlers');
-const db = require('./models');
 const routes = require('./routes');
 
 const pvbApp = express();

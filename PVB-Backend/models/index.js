@@ -20,7 +20,7 @@ module.exports.connectPVBDatabaseNew = async () => {
 
 module.exports.getAllBallots = () => {
     try {
-        console.log("Retrieving dta from PVB Database!");
+        console.log("Retrieving Data..");
         results = client.db("PVB-Eballots").collection('eballots').find().toArray();
         console.log(results);
         return results;
