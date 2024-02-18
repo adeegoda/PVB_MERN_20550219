@@ -10,3 +10,15 @@ exports.showBallots = async (req, res, next) => {
         next(error);
     }
 }
+
+exports.submitBallot = async (req, res, next) => {
+    try {
+        const { voter_nic, option_1 } = req.body;
+        const ballot = { voter_nic, option_1 }
+        await dbModel.submitBallot(ballot);
+
+    } catch (error) {
+        error.status = 400;
+        next(error);
+    }
+}

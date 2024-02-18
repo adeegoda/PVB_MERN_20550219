@@ -14,6 +14,7 @@ pvbApp.get('/', (req, res) => {
 });
 
 pvbApp.use('/api/eballots', routes.eballot);
+pvbApp.use('/api/submitBallots', routes.eballot);
 
 pvbApp.post('/', (req, res) => {
     res.json({ text: 'Hello from Anji! This is a POST request!' });

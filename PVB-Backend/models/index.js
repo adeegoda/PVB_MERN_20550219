@@ -18,12 +18,22 @@ module.exports.connectPVBDatabaseNew = async () => {
     }
 }
 
-module.exports.getAllBallots = () => {
+module.exports.getAllBallots = async () => {
     try {
         console.log("Retrieving Data..");
-        results = client.db("PVB-Eballots").collection('eballots').find().toArray();
+        results = await client.db("PVB-Eballots").collection('eballots').find().toArray();
         console.log(results);
         return results;
+    } catch (error) {
+        console.log('DB Connection error');
+    }
+}
+
+module.exports.submitBallot = async (ballot) => {
+    try {
+        console.log("Submiting Ballot..");
+        await client.db("PVB-Eballots").collection('eballots').insertOne(ballot);
+        console.log("Ballot Submitted!");
     } catch (error) {
         console.log('DB Connection error');
     }
