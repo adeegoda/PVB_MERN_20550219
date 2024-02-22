@@ -15,10 +15,8 @@ async function submitBallot(req, res) {
             option_2,
             option_3
         });
-
         // Save the new ballot to the database
         await newBallot.save();
-
         // Respond with success message
         res.status(200).json({ message: 'Ballot submitted successfully' });
     } catch (error) {

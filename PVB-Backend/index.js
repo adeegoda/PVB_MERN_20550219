@@ -5,23 +5,19 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./error-handlers');
 const { submitBallot } = require('./controllers/ballotController');
+const { validateNIC } = require('./controllers/nicValidator');
 const port = process.env.PORT;
 
 const pvbApp = express();
 pvbApp.use(express.json());
 pvbApp.use(bodyParser.json());
+pvbApp.use(cors());
 
 // Import database connection
 require('./models');
 
-pvbApp.get('/', (req, res) => {
-    res.json({ text: 'Hello from Anji! this is a GET request' });
-    console.log("GET RQ recieved");
-});
-
-pvbApp.use(cors());
-
-// Route handler for submitting ballots
+// Route handlers
+pvbApp.post('/validateNIC', validateNIC)
 pvbApp.post('/api/submitBallots', submitBallot);
 
 pvbApp.use(errorHandler.resourceNotFound);
