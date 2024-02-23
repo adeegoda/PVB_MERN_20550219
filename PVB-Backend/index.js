@@ -5,7 +5,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./error-handlers');
 const { submitBallot } = require('./controllers/ballotController');
-const { validateNIC } = require('./controllers/nicValidator');
+const { generateOTP } = require('./controllers/otpGenerator');
+const { validateOTP } = require('./controllers/otpValidator');
 const port = process.env.PORT;
 
 const pvbApp = express();
@@ -17,7 +18,8 @@ pvbApp.use(cors());
 require('./models');
 
 // Route handlers
-pvbApp.post('/validateNIC', validateNIC)
+pvbApp.post('/generate-otp', generateOTP);
+pvbApp.post('/validate-otp', validateOTP);
 pvbApp.post('/api/submitBallots', submitBallot);
 
 pvbApp.use(errorHandler.resourceNotFound);
