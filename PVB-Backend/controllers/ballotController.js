@@ -1,17 +1,13 @@
 const Ballot = require('../models/eballot');
 
 async function submitBallot(req, res) {
-    const { option_1, option_2, option_3 } = req.body;
-    console.log('Received option_1:', option_1);
-    console.log('Received option_2:', option_2);
-    console.log('Received option_3:', option_3);
+    const { party_code} = req.body;
+    console.log('Received Party Code:', party_code);
 
     try {
         // Create a new instance of the Ballot model
         const newBallot = new Ballot({
-            option_1,
-            option_2,
-            option_3
+            party_code
         });
         // Save the new ballot to the database
         await newBallot.save();

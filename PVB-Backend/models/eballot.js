@@ -2,10 +2,14 @@ const mongoose = require('./index');
 
 // Define a schema for your data
 const BallotSchema = new mongoose.Schema({
-    voter_id: String,
-    option_1: Boolean,
-    option_2: Boolean,
-    option_3: Boolean
+    party_code: {
+        type: String,
+        required: true
+    },
+    voteDate: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 // Create a model based on the schema
