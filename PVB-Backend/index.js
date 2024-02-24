@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./error-handlers');
+const { loadPartyDetails } = require('./party-handlers/cardHandler');
 const { submitBallot } = require('./controllers/ballotController');
 const { generateOTP } = require('./controllers/otpGenerator');
 const { validateOTP } = require('./controllers/otpValidator');
@@ -18,6 +19,7 @@ pvbApp.use(cors());
 require('./models');
 
 // Route handlers
+pvbApp.get('/party-cards',loadPartyDetails);
 pvbApp.post('/generate-otp', generateOTP);
 pvbApp.post('/validate-otp', validateOTP);
 pvbApp.post('/api/submitBallots', submitBallot);
