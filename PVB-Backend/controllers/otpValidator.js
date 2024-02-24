@@ -11,7 +11,7 @@ async function validateOTP(req, res) {
             res.status(202).json({ verified: true, message: 'OTP is valid' });
             console.log("Removing validated OTP..");
             await OTP.deleteOne({ _id: savedOTP._id });
-            console.log("Removed validated OTP: " + savedOTP);
+            console.log("Removed validated OTP");
         } else {
             res.status(401).json({ verified: false, message: 'කල් ඉකුත් වූ OTP යකි | Expired OTP |காலாவதியான OTP' });
         }
