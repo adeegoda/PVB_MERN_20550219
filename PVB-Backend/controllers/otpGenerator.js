@@ -8,7 +8,7 @@ async function generateOTP(req, res) {
         console.log("Saving generated OTP...");
         await newOTP.save();
         console.log("Generated OTP saved!");
-        res.json({ otp: otp });
+        res.status(201).json({ otp: otp, message: 'OTP Generated successfully' });
     } catch (error) {
         console.error('Error saving generated OTP to database:', error);
         res.status(500).json({ error: 'Failed to generate OTP' });

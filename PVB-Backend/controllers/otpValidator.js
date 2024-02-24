@@ -5,7 +5,7 @@ async function validateOTP(req, res) {
     try {
         const savedOTP = await OTP.findOne({ otp: enteredOTP });
         if (!savedOTP) {
-            return res.status(404).json({ message: 'කල් ඉකුත් වූ OTP යකි | Expired OTP |காலாவதியான OTP' });
+            return res.status(401).json({ message: 'OTP වලංගු නැත | OTP is not valid | OTP செல்லுபடியாகாது' });
         }
         if (savedOTP && savedOTP.otp === enteredOTP) {
             res.status(202).json({ verified: true, message: 'OTP is valid' });
@@ -13,7 +13,7 @@ async function validateOTP(req, res) {
             await OTP.deleteOne({ _id: savedOTP._id });
             console.log("Removed validated OTP: " + savedOTP);
         } else {
-            res.json({ verified: false, message: 'OTP වලංගු නැත | OTP is not valid | OTP செல்லுபடியாகாது' });
+            res.status(401).json({ verified: false, message: 'කල් ඉකුත් වූ OTP යකි | Expired OTP |காலாவதியான OTP' });
         }
     } catch (err) {
         console.error('Error verifying OTP:', err);
