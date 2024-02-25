@@ -19,10 +19,10 @@ pvbApp.use(cors());
 require('./models');
 
 // Route handlers
-pvbApp.get('/party-cards',loadPartyDetails);
-pvbApp.post('/generate-otp', generateOTP);
-pvbApp.post('/validate-otp', validateOTP);
-pvbApp.post('/api/submitBallots', submitBallot);
+pvbApp.get('/pvb-api/party-cards',loadPartyDetails);
+pvbApp.post('/pvb-api/generate-otp', generateOTP);
+pvbApp.post('/pvb-api/validate-otp', validateOTP);
+pvbApp.post('/pvb-api/submitBallots', submitBallot);
 
 pvbApp.use(errorHandler.resourceNotFound);
 pvbApp.use(errorHandler.pvbErrorHandler);
