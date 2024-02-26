@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./error-handlers');
+const { loadElectionDetails } = require('./party-handlers/electionHandler');
 const { loadPartyDetails } = require('./party-handlers/cardHandler');
 const { submitBallot } = require('./controllers/ballotController');
 const { generateOTP } = require('./controllers/otpGenerator');
@@ -19,10 +20,11 @@ pvbApp.use(cors());
 require('./models');
 
 // Route handlers
-pvbApp.get('/party-cards',loadPartyDetails);
-pvbApp.post('/generate-otp', generateOTP);
-pvbApp.post('/validate-otp', validateOTP);
-pvbApp.post('/api/submitBallots', submitBallot);
+pvbApp.get('/pvb-api/election-details', loadElectionDetails);
+pvbApp.get('/pvb-api/party-cards', loadPartyDetails);
+pvbApp.post('/pvb-api/generate-otp', generateOTP);
+pvbApp.post('/pvb-api/validate-otp', validateOTP);
+pvbApp.post('/pvb-api/submitBallots', submitBallot);
 
 pvbApp.use(errorHandler.resourceNotFound);
 pvbApp.use(errorHandler.pvbErrorHandler);
