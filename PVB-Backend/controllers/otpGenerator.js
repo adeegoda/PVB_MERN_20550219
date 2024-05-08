@@ -1,9 +1,10 @@
 const { otpGen } = require('otp-gen-agent');
 const OTP = require('../models/otp');
+const OTP_NIC_MAP = require('../models/otp-nic-map');
 
 async function generateOTP(req, res) {
     const enteredNIC = req.body.nic;
-    const nicRecord = await OTP.findOne({ nic: enteredNIC });
+    const nicRecord = await OTP_NIC_MAP.findOne({ nic: enteredNIC });
     try {
         if (nicRecord) {
             return res.status(401).json({ message: 'OTP අංකයකට සම්බන්ද NIC අංකයකි | OTP already existing for the NIC number | NIC எண்ணுக்கு ஏற்கனவே OTP உள்ளது' });
@@ -11,8 +12,10 @@ async function generateOTP(req, res) {
         if (!nicRecord) {
             const otp = await otpGen();
             const newOTP = new OTP({ otp: otp, nic: enteredNIC });
+            const newOTP_NIC_MAP = new OTP_NIC_MAP({ generatedOtp: otp, nic: enteredNIC });
             console.log("Saving generated OTP...");
             await newOTP.save();
+            await newOTP_NIC_MAP.save();
             console.log("Generated OTP saved with paired NIC!");
             res.status(201).json({ otp: otp, message: 'OTP Generated successfully' });
         }
