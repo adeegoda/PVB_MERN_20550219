@@ -18,10 +18,11 @@ async function validateOTP(req, res) {
                 await OTP.deleteOne({ _id: savedOTP._id });
                 console.log("Removed validated OTP");
             } else {
-                res.status(401).json({ verified: false, message: 'කල් ඉකුත් වූ OTP යකි | Expired OTP |காலாவதியான OTP' });
+                res.status(401).json({ verified: false, message: 'කල් ඉකුත් වූ OTP යකි | Expired OTP | காலாவதியான OTP' });
+                await OTP.deleteOne({ _id: savedOTP._id });
             }
         } else {
-            res.status(401).json({ verified: false, message: 'භාවිතා කරන ලද OTP යකි | Used OTP |காலாவதியான OTP' });
+            res.status(401).json({ verified: false, message: 'භාවිතා කරන ලද OTP යකි | Used OTP | காலாவதியான OTP' });
         }
     } catch (err) {
         console.error('Error verifying OTP:', err);
