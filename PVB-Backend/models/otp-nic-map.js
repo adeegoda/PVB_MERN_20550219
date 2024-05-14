@@ -1,7 +1,7 @@
 const mongoose = require('./index');
 
-const otpSchema = new mongoose.Schema({
-    otp: {
+const otpNicSchema = new mongoose.Schema({
+    generatedOtp: {
         type: String,
         required: true
     },
@@ -15,6 +15,6 @@ const otpSchema = new mongoose.Schema({
     }
 });
 
-const OTP = mongoose.model('OTP', otpSchema);
+const OTP_NIC = mongoose.model('OTP_NIC', otpNicSchema);
 
-module.exports = OTP;
+module.exports = OTP_NIC;
