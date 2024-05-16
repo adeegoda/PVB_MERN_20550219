@@ -9,6 +9,8 @@ const { loadPartyDetails } = require('./party-handlers/cardHandler');
 const { submitBallot } = require('./controllers/ballotController');
 const { generateOTP } = require('./controllers/otpGenerator');
 const { validateOTP } = require('./controllers/otpValidator');
+const { getVotesPerParty } = require('./controllers/votesController');
+require('mongoose');
 const port = process.env.PORT;
 
 const pvbApp = express();
@@ -25,6 +27,7 @@ pvbApp.get('/pvb-api/party-cards', loadPartyDetails);
 pvbApp.post('/pvb-api/generate-otp', generateOTP);
 pvbApp.post('/pvb-api/validate-otp', validateOTP);
 pvbApp.post('/pvb-api/submitBallots', submitBallot);
+pvbApp.get('/pvb-api/votes-per-party', getVotesPerParty);
 
 pvbApp.use(errorHandler.resourceNotFound);
 pvbApp.use(errorHandler.pvbErrorHandler);
