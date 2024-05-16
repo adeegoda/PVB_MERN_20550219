@@ -11,6 +11,7 @@ const { generateOTP } = require('./controllers/otpGenerator');
 const { validateOTP } = require('./controllers/otpValidator');
 const { getVotesPerParty } = require('./controllers/votesController');
 const { getTotalVotesCasted } = require('./controllers/votesController');
+const { recordCancelledVote } = require('./controllers/ballotController');
 require('mongoose');
 const port = process.env.PORT;
 
@@ -28,6 +29,7 @@ pvbApp.get('/pvb-api/party-cards', loadPartyDetails);
 pvbApp.post('/pvb-api/generate-otp', generateOTP);
 pvbApp.post('/pvb-api/validate-otp', validateOTP);
 pvbApp.post('/pvb-api/submitBallots', submitBallot);
+pvbApp.post('/pvb-api/cancelled-ballots', recordCancelledVote);
 pvbApp.get('/pvb-api/votes-per-party', getVotesPerParty);
 pvbApp.get('/pvb-api/total-votes', getTotalVotesCasted);
 
