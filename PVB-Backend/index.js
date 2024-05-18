@@ -7,12 +7,14 @@ const errorHandler = require('./error-handlers');
 const { loadElectionDetails } = require('./party-handlers/electionHandler');
 const { loadPartyDetails } = require('./party-handlers/cardHandler');
 const { submitBallot } = require('./controllers/ballotController');
+const { recordCancelledVote } = require('./controllers/ballotController');
 const { generateOTP } = require('./controllers/otpGenerator');
 const { validateOTP } = require('./controllers/otpValidator');
 const { getVotesPerParty } = require('./controllers/votesController');
 const { getTotalVotesCasted } = require('./controllers/votesController');
-const { recordCancelledVote } = require('./controllers/ballotController');
+const { getTotalVotesCancelled } = require('./controllers/votesController');
 require('mongoose');
+
 const port = process.env.PORT;
 
 const pvbApp = express();
@@ -31,7 +33,8 @@ pvbApp.post('/pvb-api/validate-otp', validateOTP);
 pvbApp.post('/pvb-api/submitBallots', submitBallot);
 pvbApp.post('/pvb-api/cancelled-ballots', recordCancelledVote);
 pvbApp.get('/pvb-api/votes-per-party', getVotesPerParty);
-pvbApp.get('/pvb-api/total-votes', getTotalVotesCasted);
+pvbApp.get('/pvb-api/total-valid-votes', getTotalVotesCasted);
+pvbApp.get('/pvb-api/total-cancelled-votes', getTotalVotesCancelled);
 
 pvbApp.use(errorHandler.resourceNotFound);
 pvbApp.use(errorHandler.pvbErrorHandler);

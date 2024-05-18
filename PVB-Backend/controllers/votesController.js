@@ -1,4 +1,5 @@
 const VOTE = require('../models/votes');
+const CANCELLED = require('../models/cancelled-votes');
 
 async function getVotesPerParty(req, res) {
     try {
@@ -16,12 +17,22 @@ async function getVotesPerParty(req, res) {
 
 async function getTotalVotesCasted(req, res) {
     try {
-        const totalVotes = await VOTE.countDocuments({});
-        res.json({ totalVotes });
+        const totalValidVotes = await VOTE.countDocuments({});
+        res.json({ totalValidVotes });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'An error occurred while coutning Total Votes' });
     }
 }
 
-module.exports = { getVotesPerParty, getTotalVotesCasted };
+async function getTotalVotesCancelled(req, res) {
+    try {
+        const totalCancelledVotes = await CANCELLED.countDocuments({});
+        res.json({ totalCancelledVotes });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'An error occurred while coutning Total Votes' });
+    }
+}
+
+module.exports = { getVotesPerParty, getTotalVotesCasted, getTotalVotesCancelled };
