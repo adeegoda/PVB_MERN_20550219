@@ -45,6 +45,7 @@ async function getFraudAtteptsPerID(req, res) {
     try {
         const perNICFraudCount = await OTP_NIC_ERROR.countDocuments({ nic: enteredOTPNIC });
         res.json({ perNICFraudCount });
+        console.log('Fraud Count Per ID:' + perNICFraudCount);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'An error occurred while coutning Per ID Farud Attempts' });
