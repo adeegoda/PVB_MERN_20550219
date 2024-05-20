@@ -40,4 +40,15 @@ async function getFraudAttepts(req, res) {
     }
 }
 
-module.exports = { generateOTP, getFraudAttepts };
+async function getFraudAtteptsPerID(req, res) {
+    const enteredOTPNIC = req.body.nic;
+    try {
+        const perNICFraudCount = await OTP_NIC_ERROR.countDocuments({ nic: enteredOTPNIC });
+        res.json({ perNICFraudCount });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'An error occurred while coutning Per ID Farud Attempts' });
+    }
+}
+
+module.exports = { generateOTP, getFraudAttepts, getFraudAtteptsPerID };

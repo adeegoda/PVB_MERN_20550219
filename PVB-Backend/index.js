@@ -14,6 +14,7 @@ const { getVotesPerParty } = require('./controllers/votesController');
 const { getTotalVotesCasted } = require('./controllers/votesController');
 const { getTotalVotesCancelled } = require('./controllers/votesController');
 const { getFraudAttepts } = require('./controllers/otpGenerator');
+const { getFraudAtteptsPerID } = require('./controllers/otpGenerator');
 require('mongoose');
 
 const port = process.env.PORT;
@@ -37,6 +38,7 @@ pvbApp.get('/pvb-api/votes-per-party', getVotesPerParty);
 pvbApp.get('/pvb-api/total-valid-votes', getTotalVotesCasted);
 pvbApp.get('/pvb-api/total-cancelled-votes', getTotalVotesCancelled);
 pvbApp.get('/pvb-api/fraud-attepmts', getFraudAttepts)
+pvbApp.post('/pvb-api/fraud-attepmts-perNIC', getFraudAtteptsPerID)
 
 pvbApp.use(errorHandler.resourceNotFound);
 pvbApp.use(errorHandler.pvbErrorHandler);
