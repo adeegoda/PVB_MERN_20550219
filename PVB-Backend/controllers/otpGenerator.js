@@ -30,4 +30,14 @@ async function generateOTP(req, res) {
     }
 }
 
-module.exports = { generateOTP };
+async function getFraudAttepts(req, res) {
+    try {
+        const totalNICFraudCount = await OTP_NIC_ERROR.countDocuments({});
+        res.json({ totalNICFraudCount });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'An error occurred while coutning Total Farud Attempts' });
+    }
+}
+
+module.exports = { generateOTP, getFraudAttepts };
