@@ -2,12 +2,13 @@
   "name": "pvb_mern_20550219",
   "version": "1.0.0",
   "description": "PVB V2",
+  "license": "ISC",
+  "author": "anjanadeegoda",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "start": "nodemon"
   },
-  "author": "anjanadeegoda",
-  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
