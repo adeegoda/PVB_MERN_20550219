@@ -31,8 +31,6 @@ require('./models');
 
 // Route handlers
 pvbApp.use('/auth', authRoutes);
-pvbApp.use(errorHandler.resourceNotFound);
-pvbApp.use(errorHandler.pvbErrorHandler);
 
 pvbApp.get('/pvb-api/election-details', authMiddleware, loadElectionDetails);
 pvbApp.get('/pvb-api/party-cards', authMiddleware, loadPartyDetails);
@@ -43,7 +41,11 @@ pvbApp.post('/pvb-api/cancelled-ballots', authMiddleware, recordCancelledVote);
 pvbApp.get('/pvb-api/votes-per-party', authMiddleware, getVotesPerParty);
 pvbApp.get('/pvb-api/total-valid-votes', authMiddleware, getTotalVotesCasted);
 pvbApp.get('/pvb-api/total-cancelled-votes', authMiddleware, getTotalVotesCancelled);
-pvbApp.get('/pvb-api/fraud-attepmts', authMiddleware, getFraudAttepts)
-pvbApp.post('/pvb-api/fraud-attepmts-perNIC', authMiddleware, getFraudAtteptsPerID)
+pvbApp.get('/pvb-api/fraud-attepmts', authMiddleware, getFraudAttepts);
+pvbApp.post('/pvb-api/fraud-attepmts-perNIC', authMiddleware, getFraudAtteptsPerID);
+
+// Error handlers
+pvbApp.use(errorHandler.resourceNotFound);
+pvbApp.use(errorHandler.pvbErrorHandler);
 
 pvbApp.listen(port, console.log(`Server started @ port ${port}`));
