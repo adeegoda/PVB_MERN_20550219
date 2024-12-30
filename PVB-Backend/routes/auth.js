@@ -20,15 +20,18 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
         const user = await User.findOne({ username });
+        console.log('User found:', user);
         if (!user) {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
         const isMatch = await bcrypt.compare(password, user.password);
+        console.log('Password match:', isMatch);
         if (!isMatch) {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.status(200).json({ token });
+        console.log('Token sent:', token);
     } catch (error) {
         res.status(500).json({ message: 'Error logging in', error });
     }
