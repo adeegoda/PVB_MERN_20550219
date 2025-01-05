@@ -32,11 +32,11 @@ require('./models');
 // Route handlers
 pvbApp.use('/auth', authRoutes);
 
-pvbApp.get('/pvb-api/election-details', authMiddleware, loadElectionDetails);
-pvbApp.get('/pvb-api/party-cards', authMiddleware, loadPartyDetails);
+pvbApp.get('/pvb-api/election-details', loadElectionDetails);
+pvbApp.get('/pvb-api/party-cards',authMiddleware, loadPartyDetails);
 pvbApp.post('/pvb-api/generate-otp', authMiddleware, generateOTP);
-pvbApp.post('/pvb-api/validate-otp', authMiddleware, validateOTP);
-pvbApp.post('/pvb-api/submitBallots', authMiddleware, submitBallot);
+pvbApp.post('/pvb-api/validate-otp', validateOTP);
+pvbApp.post('/pvb-api/submitBallots', submitBallot);
 pvbApp.post('/pvb-api/cancelled-ballots', authMiddleware, recordCancelledVote);
 pvbApp.get('/pvb-api/votes-per-party', authMiddleware, getVotesPerParty);
 pvbApp.get('/pvb-api/total-valid-votes', authMiddleware, getTotalVotesCasted);
