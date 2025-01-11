@@ -33,7 +33,7 @@ require('./models');
 pvbApp.use('/auth', authRoutes);
 
 pvbApp.get('/pvb-api/election-details', loadElectionDetails);
-pvbApp.get('/pvb-api/party-cards',authMiddleware, loadPartyDetails);
+pvbApp.get('/pvb-api/party-cards', loadPartyDetails);
 pvbApp.post('/pvb-api/generate-otp', authMiddleware, generateOTP);
 pvbApp.post('/pvb-api/validate-otp', validateOTP);
 pvbApp.post('/pvb-api/submitBallots', submitBallot);
