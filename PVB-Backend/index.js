@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./error-handlers');
+const authRoutes = require('./routes/auth');
 const { loadElectionDetails } = require('./party-handlers/electionHandler');
 const { loadPartyDetails } = require('./party-handlers/cardHandler');
 const { submitBallot } = require('./controllers/ballotController');
@@ -16,6 +17,7 @@ const { getTotalVotesCancelled } = require('./controllers/votesController');
 const { getFraudAttepts } = require('./controllers/otpGenerator');
 const { getFraudAtteptsPerID } = require('./controllers/otpGenerator');
 require('mongoose');
+const authMiddleware = require('./middleware/authMiddleware');
 
 const port = process.env.PORT;
 
@@ -28,18 +30,21 @@ pvbApp.use(cors());
 require('./models');
 
 // Route handlers
+pvbApp.use('/auth', authRoutes);
+
 pvbApp.get('/pvb-api/election-details', loadElectionDetails);
 pvbApp.get('/pvb-api/party-cards', loadPartyDetails);
-pvbApp.post('/pvb-api/generate-otp', generateOTP);
+pvbApp.post('/pvb-api/generate-otp', authMiddleware, generateOTP);
 pvbApp.post('/pvb-api/validate-otp', validateOTP);
 pvbApp.post('/pvb-api/submitBallots', submitBallot);
-pvbApp.post('/pvb-api/cancelled-ballots', recordCancelledVote);
-pvbApp.get('/pvb-api/votes-per-party', getVotesPerParty);
-pvbApp.get('/pvb-api/total-valid-votes', getTotalVotesCasted);
-pvbApp.get('/pvb-api/total-cancelled-votes', getTotalVotesCancelled);
-pvbApp.get('/pvb-api/fraud-attepmts', getFraudAttepts)
-pvbApp.post('/pvb-api/fraud-attepmts-perNIC', getFraudAtteptsPerID)
+pvbApp.post('/pvb-api/cancelled-ballots', authMiddleware, recordCancelledVote);
+pvbApp.get('/pvb-api/votes-per-party', authMiddleware, getVotesPerParty);
+pvbApp.get('/pvb-api/total-valid-votes', authMiddleware, getTotalVotesCasted);
+pvbApp.get('/pvb-api/total-cancelled-votes', authMiddleware, getTotalVotesCancelled);
+pvbApp.get('/pvb-api/fraud-attepmts', authMiddleware, getFraudAttepts);
+pvbApp.post('/pvb-api/fraud-attepmts-perNIC', authMiddleware, getFraudAtteptsPerID);
 
+// Error handlers
 pvbApp.use(errorHandler.resourceNotFound);
 pvbApp.use(errorHandler.pvbErrorHandler);
 
