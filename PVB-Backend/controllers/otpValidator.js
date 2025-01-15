@@ -1,5 +1,7 @@
 const OTP = require('../models/otp');
+const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 const OTP_EXPIRY_DURATION_MS = 30 * 1000;
+
 async function validateOTP(req, res) {
     const enteredOTP = req.body.otp;
     try {
@@ -13,7 +15,9 @@ async function validateOTP(req, res) {
             const otpAge = currentTime - otpCreationTime;
 
             if (otpAge <= OTP_EXPIRY_DURATION_MS) {
-                res.status(202).json({ verified: true, message: 'OTP is valid' });
+                const otptoken = jwt.sign({ userId: savedOTP.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                res.status(202).json({ verified: true, otptoken, message: 'OTP is valid' });
+                console.log('OTP Validation Token sent:', otptoken);
                 console.log("Removing validated OTP..");
                 await OTP.deleteOne({ _id: savedOTP._id });
                 console.log("Removed validated OTP");
@@ -26,7 +30,7 @@ async function validateOTP(req, res) {
         }
     } catch (err) {
         console.error('Error verifying OTP:', err);
-        res.status(500).json({ error: 'Failed to verify OTP' });
+        res.status(500).json({ message: 'Server error' });
     }
 }
 
