@@ -15,7 +15,7 @@ async function validateOTP(req, res) {
             const otpAge = currentTime - otpCreationTime;
 
             if (otpAge <= OTP_EXPIRY_DURATION_MS) {
-                const otptoken = jwt.sign({ userId: savedOTP.userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                const otptoken = jwt.sign({ userId: savedOTP.userId }, process.env.JWT_SECRET, { expiresIn: '7m' });
                 res.status(202).json({ verified: true, otptoken, message: 'OTP is valid' });
                 console.log('OTP Validation Token sent:', otptoken);
                 console.log("Removing validated OTP..");
