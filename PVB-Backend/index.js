@@ -19,6 +19,7 @@ const { getFraudAtteptsPerID } = require('./controllers/otpGenerator');
 require('mongoose');
 const authMiddleware = require('./middleware/authMiddleware');
 const otpMiddleware = require('./middleware/otpMiddleware');
+const combinedMiddleware = require('./middleware/combinedMiddleware');
 
 const port = process.env.PORT;
 
@@ -34,7 +35,7 @@ require('./models');
 pvbApp.use('/auth', authRoutes);
 
 pvbApp.get('/pvb-api/election-details',loadElectionDetails);
-pvbApp.get('/pvb-api/party-cards',otpMiddleware, loadPartyDetails);
+pvbApp.get('/pvb-api/party-cards',combinedMiddleware, loadPartyDetails);
 pvbApp.post('/pvb-api/generate-otp', authMiddleware, generateOTP);
 pvbApp.post('/pvb-api/validate-otp', validateOTP);
 pvbApp.post('/pvb-api/submitBallots',otpMiddleware, submitBallot);
